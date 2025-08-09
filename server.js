@@ -26,3 +26,15 @@ app.use('/api/admin', require('./routes/admin'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+
+const Event = require('./models/Event'); // make sure you have an Event model
+
+app.get('/test-db', async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.json({ success: true, events });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
